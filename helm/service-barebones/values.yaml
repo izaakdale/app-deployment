@@ -43,7 +43,7 @@ securityContext:
 
 service:
   type: ClusterIP
-  port: 90
+  port: 80
 
 ingress:
   enabled: false
@@ -86,7 +86,7 @@ readinessProbe:
 
 env:
   - name: PORT
-    value: '90'
+    value: '80'
 
 autoscaling:
   enabled: false
