@@ -43,7 +43,7 @@ securityContext:
 
 service:
   type: ClusterIP
-  port: 80
+  port: 90
 
 ingress:
   enabled: false
@@ -83,6 +83,10 @@ readinessProbe:
   httpGet:
     path: /_/ping
     port: http
+
+env:
+  - name: PORT
+    value: 90
 
 autoscaling:
   enabled: false
