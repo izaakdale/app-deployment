@@ -54,8 +54,12 @@ ingress:
   hosts:
     - host: '*.app'
       paths:
-        - path: /
+        - path: /cicd
           pathType: Prefix
+          backend:
+            service:
+              name: service-cicd
+              port: 80
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
