@@ -50,24 +50,12 @@ ingress:
   annotations:
     {}
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+    # kubernetes.io/tls-acme: 'true'
   hosts:
     - host: '*.app'
       paths:
-        - path: /cicd
+        - path: /
           pathType: Prefix
-          backend:
-            service:
-              name: service-cicd
-              port:
-                number: 80
-        - path: /barebones
-          pathType: Prefix
-          backend:
-            service:
-              name: service-barebones
-              port:
-                number: 80
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
