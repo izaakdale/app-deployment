@@ -45,6 +45,17 @@ service:
   type: ClusterIP
   port: 80
 
+ingressroute:
+  enabled: true
+  match: Host(`barebones.test.tester`)
+  routenamespace: traefik
+  svcnamespace: apps
+  entryPoints:
+    - web
+    # - websecure
+  # tls:
+  #   certResolver: le
+
 ingress:
   enabled: false
   className: ''

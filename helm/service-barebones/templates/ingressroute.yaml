@@ -1,0 +1,28 @@
+{{- if .Values.ingressroute.enabled -}}
+{{- $fullName := include "service-barebones.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ .Values.ingressroute.routenamespace }}
+spec:
+  {{- with .Values.ingressroute.entryPoints }}
+  entryPoints:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  routes:
+    - kind: Rule
+      match: {{ .Values.ingressroute.match }}
+      services:
+        - kind: Service
+          name: {{ $fullName }}
+          namespace: {{ .Values.ingressroute.svcnamespace }}
+          port: {{ $svcPort }}
+  {{- with .Values.ingressroute.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+{{- end }}
