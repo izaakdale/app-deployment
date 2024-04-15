@@ -1,0 +1,39 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: service-cicd
+spec:
+  entryPoints:
+    - web
+    # - websecure
+  routes:
+    - kind: Rule
+      match: Host(`cicd.test.tester`)
+      services:
+        - kind: Service
+          name: service-cicd
+          namespace: apps
+          port: 80
+  # tls:
+  #   certResolver: le
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: service-barebones
+spec:
+  entryPoints:
+    - web
+    # - websecure
+  routes:
+    - kind: Rule
+      match: Host(`barebones.test.tester`)
+      services:
+        - kind: Service
+          name: service-barebones
+          namespace: apps
+          port: 80
+  # tls:
+  #   certResolver: le
