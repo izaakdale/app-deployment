@@ -44,6 +44,17 @@ service:
   type: ClusterIP
   port: 80
 
+ingressroute:
+  enabled: true
+  match: Host(`cicd.test.tester`)
+  routenamespace: traefik
+  svcnamespace: apps
+  entryPoints:
+    - web
+    # - websecure
+  # tls:
+  #   certResolver: le
+
 ingress:
   enabled: false
   className: ''
