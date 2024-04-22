@@ -45,9 +45,9 @@ service:
   port: 80
 
 ingressroute:
-  enabled: true
-  match: Host(`cicd.test.tester`)
-  routenamespace: traefik
+  enabled: false
+  match: Host(`linux`)
+  routenamespace: apps
   svcnamespace: apps
   entryPoints:
     - web
