@@ -46,7 +46,7 @@ service:
   port: 80
 
 ingressroute:
-  enabled: true
+  enabled: false
   match: Host(`barebones.test.tester`)
   routenamespace: traefik
   svcnamespace: apps
