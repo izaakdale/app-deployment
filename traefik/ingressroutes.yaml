@@ -1,3 +1,12 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /service-cicd
+      - /service-barebones
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -9,15 +18,18 @@ spec:
     # - websecure
   routes:
     - kind: Rule
-      match: Host(`cicd.test.tester`)
+      # match: Host(`linux`) && PathPrefix(`/service-cicd`)
+      match: PathPrefix(`/service-cicd`)
       services:
         - kind: Service
           name: service-cicd
           namespace: apps
           port: 80
+      middlewares:
+        - name: stripprefix
+          namespace: apps
   # tls:
   #   certResolver: le
-
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -29,11 +41,16 @@ spec:
     # - websecure
   routes:
     - kind: Rule
-      match: Host(`barebones.test.tester`)
+      # match: Host(`linux`) &&  PathPrefix(`/service-barebones`)
+      match: PathPrefix(`/service-barebones`)
       services:
         - kind: Service
           name: service-barebones
           namespace: apps
           port: 80
-  # tls:
-  #   certResolver: le
+      middlewares:
+        - name: stripprefix
+          namespace: apps
+#   # tls:
+#   #   certResolver: le
+
