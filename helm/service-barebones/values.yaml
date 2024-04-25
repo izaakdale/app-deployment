@@ -26,7 +26,9 @@ serviceAccount:
   name: ''
 
 podAnnotations: {}
-podLabels: {}
+podLabels:
+  app: service-barebones
+  version: '0.1.0'
 
 podSecurityContext:
   {}
