@@ -55,4 +55,25 @@ spec:
           namespace: apps
 #   # tls:
 #   #   certResolver: le
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hello-server
+  namespace: apps
+spec:
+  entryPoints:
+    - web
+    # - websecure
+  routes:
+    - kind: Rule
+      # match: Host(`linux`) &&  PathPrefix(`/service-barebones`)
+      match: PathPrefix(`/`)
+      services:
+        - kind: Service
+          name: hello-server
+          namespace: apps
+          port: 80
+#   # tls:
+#   #   certResolver: le
 

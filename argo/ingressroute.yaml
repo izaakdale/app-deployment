@@ -15,11 +15,11 @@ metadata:
   namespace: argocd
 spec:
   entryPoints:
-    # - web
-    - websecure
+    - web
+    # - websecure
   routes:
     - kind: Rule
-      match: Host(`linux`) && PathPrefix(`/`)
+      match: PathPrefix(`/`)
       services:
         - kind: Service
           name: argocd-server
@@ -28,5 +28,5 @@ spec:
       middlewares:
         - name: stripprefix
           namespace: argocd
-  tls:
-    certResolver: default
+  # tls:
+  #   certResolver: default
