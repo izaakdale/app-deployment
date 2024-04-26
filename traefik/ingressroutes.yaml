@@ -8,6 +8,7 @@ spec:
     prefixes:
       - /service-cicd
       - /service-barebones
+      - /test
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -15,8 +16,8 @@ metadata:
   name: service-cicd
 spec:
   entryPoints:
-    - web
-    # - websecure
+    # - web
+    - websecure
   routes:
     - kind: Rule
       # match: Host(`linux`) && PathPrefix(`/service-cicd`)
@@ -25,12 +26,12 @@ spec:
         - kind: Service
           name: service-cicd
           namespace: apps
-          port: 80
+          port: 443
       middlewares:
         - name: stripprefix
           namespace: apps
-  # tls:
-  #   certResolver: le
+  tls:
+    certResolver: default
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -39,8 +40,8 @@ metadata:
   namespace: apps
 spec:
   entryPoints:
-    - web
-    # - websecure
+    # - web
+    - websecure
   routes:
     - kind: Rule
       # match: Host(`linux`) &&  PathPrefix(`/service-barebones`)
@@ -49,12 +50,12 @@ spec:
         - kind: Service
           name: service-barebones
           namespace: apps
-          port: 80
+          port: 443
       middlewares:
         - name: stripprefix
           namespace: apps
-#   # tls:
-#   #   certResolver: le
+  tls:
+    certResolver: default
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -63,17 +64,19 @@ metadata:
   namespace: apps
 spec:
   entryPoints:
-    - web
-    # - websecure
+    # - web
+    - websecure
   routes:
     - kind: Rule
       # match: Host(`linux`) &&  PathPrefix(`/service-barebones`)
-      match: PathPrefix(`/`)
+      match: PathPrefix(`/test`)
       services:
         - kind: Service
           name: hello-server
           namespace: apps
-          port: 80
-#   # tls:
-#   #   certResolver: le
-
+          port: 443
+      middlewares:
+        - name: stripprefix
+          namespace: apps
+  tls:
+    certResolver: default

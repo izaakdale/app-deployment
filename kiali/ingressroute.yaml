@@ -2,19 +2,19 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: argocd
-  namespace: argocd
+  name: kiali
+  namespace: istio-system
 spec:
   entryPoints:
     - web
     # - websecure
   routes:
     - kind: Rule
-      match: Host(`argocd.izaakserver.com`)
+      match: Host(`kiali.izaakserver.com`)
       services:
         - kind: Service
-          name: argocd-server
-          namespace: argocd
-          port: 80
+          name: kiali
+          namespace: istio-system
+          port: 20001
   # tls:
   #   certResolver: default
